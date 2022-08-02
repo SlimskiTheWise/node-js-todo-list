@@ -16,7 +16,32 @@ const getTodoDetails = async (req, res) => {
     res.json(todo)
 }
 
+async function createTodo(req, res) {
+    const { title, content, status} = req.body;
+
+    const todo = await prisma.todo.create({
+        title,
+        content,
+        status
+    })
+
+    res.json(todo)
+}
+
+async function deleteTodo(req, res) {
+    const { id } = req.params;
+
+    const todo = await prisma.todo.delete({
+        where: {
+            id
+        },
+    })
+    res.json(todo)
+}
+
 module.exports = {
     getTodos,
-    getTodoDetails
+    getTodoDetails,
+    createTodo,
+    deleteTodo
 }
